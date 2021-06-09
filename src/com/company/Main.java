@@ -4,21 +4,23 @@ public class Main {
     public static void main(String[] args) {
         BankAccount user = new BankAccount();
         user.deposit(20000);
-        System.out.println(" На вашем счету: " +user.getAmount()+ "som ");
+        System.out.println(" На вашем счету: " + user.getAmount() + "som ");
 
 
-
-
-        while(true){
-            try{
+        while (true) {
+            try {
                 System.out.println(user.withdraw(6000));
 
-
-
-            }catch(LimitException e){
-                System.out.println("На вашем счете: " + e.getRemainingAmount() + "сом. Был снят остаток " +
+            } catch (LimitException e) {
+                try {
+                    user.withdraw((int) user.getAmount());
+                } catch (LimitException limitException) {
+                    limitException.printStackTrace();
+                }
+                System.out.println(user.getAmount() - user.getAmount());
+                System.out.println("На вашем счете: " + user.getAmount() + "сом. Был снят остаток " +
                         e.getRemainingAmount() + ". " + "Оставшаяся сумма = " +
-                        (e.getRemainingAmount()));
+                        user.getAmount());
                 break;
             }
 
